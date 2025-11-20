@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import { WalletProvider, useWallet } from "@/lib/wallet-context"
 import { Toaster } from "@/components/ui/sonner"
 import { FreighterModal } from "@/components/freighter-modal"
+import { KYCModal } from "@/components/kyc-modal"
 import ConnectPage from "@/pages/ConnectPage"
 import DiscoverPage from "@/pages/DiscoverPage"
 import ContentDetailPage from "@/pages/ContentDetailPage"
@@ -10,7 +11,15 @@ import LibraryContentPage from "@/pages/LibraryContentPage"
 import ReviewPage from "@/pages/ReviewPage"
 
 function AppContent() {
-  const { showFreighterModal, setShowFreighterModal, freighterMode, handleFreighterConnect } = useWallet()
+  const { 
+    showFreighterModal, 
+    setShowFreighterModal, 
+    freighterMode, 
+    handleFreighterConnect,
+    showKYCModal,
+    setShowKYCModal,
+    handleKYCComplete
+  } = useWallet()
 
   return (
     <>
@@ -29,6 +38,15 @@ function AppContent() {
           mode={freighterMode}
           onClose={() => setShowFreighterModal(false)}
           onConnect={handleFreighterConnect}
+        />
+      )}
+      {showKYCModal && (
+        <KYCModal
+          onComplete={handleKYCComplete}
+          onCancel={() => {
+            setShowKYCModal(false)
+            setShowFreighterModal(false)
+          }}
         />
       )}
     </>
