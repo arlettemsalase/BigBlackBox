@@ -34,7 +34,7 @@ export default function LibraryPage() {
         </div>
 
         {filteredContents.length > 0 ? (
-          <div className="columns-2 gap-4 md:columns-4 lg:gap-6">
+          <div className="columns-2 gap-2 md:columns-4 md:gap-3">
             {filteredContents.map((content) => (
               <ContentCard key={content.id} content={content} />
             ))}

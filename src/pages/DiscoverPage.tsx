@@ -12,7 +12,7 @@ export default function DiscoverPage() {
         </div>
 
         {/* Pinterest-style masonry layout */}
-        <div className="columns-2 gap-4 md:columns-4 lg:gap-6">
+        <div className="columns-2 gap-2 md:columns-4 md:gap-3">
           {mockContents.map((content) => (
             <ContentCard key={content.id} content={content} />
           ))}

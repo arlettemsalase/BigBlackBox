@@ -10,7 +10,7 @@ export function ContentCard({ content }: ContentCardProps) {
   return (
     <Link 
       to={content.isOwned ? `/library/${content.id}` : `/content/${content.id}`} 
-      className="group block mb-4 break-inside-avoid"
+      className="group block mb-2 break-inside-avoid"
     >
       <div className="overflow-hidden rounded-lg bg-card transition-all hover:shadow-xl">
         <div className="relative overflow-hidden">
