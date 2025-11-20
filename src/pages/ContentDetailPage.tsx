@@ -6,7 +6,6 @@ import { ArrowLeft, Star, ShoppingCart, Download } from "lucide-react"
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { useWallet } from "@/lib/wallet-context"
 import { getContentById, getReviewsByContentId } from "@/lib/mock-backend"
 import type { Content, Review } from "@/lib/types"
 import { PurchaseModal } from "@/components/purchase-modal"
@@ -14,18 +13,12 @@ import { PurchaseModal } from "@/components/purchase-modal"
 export default function ContentDetailPage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
-  const { isConnected } = useWallet()
   const [content, setContent] = useState<Content | null>(null)
   const [reviews, setReviews] = useState<Review[]>([])
   const [loading, setLoading] = useState(true)
   const [showPurchaseModal, setShowPurchaseModal] = useState(false)
 
   useEffect(() => {
-    if (!isConnected) {
-      navigate("/connect")
-      return
-    }
-
     const loadContent = async () => {
       if (!id) return
       
@@ -45,7 +38,7 @@ export default function ContentDetailPage() {
     }
 
     loadContent()
-  }, [id, isConnected, navigate])
+  }, [id])
 
   if (loading) {
     return (

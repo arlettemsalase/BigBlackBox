@@ -12,7 +12,7 @@ function App() {
   return (
     <WalletProvider>
       <Routes>
-        <Route path="/" element={<Navigate to="/connect" replace />} />
+        <Route path="/" element={<Navigate to="/discover" replace />} />
         <Route path="/connect" element={<ConnectPage />} />
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/content/:id" element={<ContentDetailPage />} />
