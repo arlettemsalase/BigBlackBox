@@ -157,10 +157,10 @@ The MVP is successful if:
 
 BBB Team
 Andrea Junes – Backend & ZK
-Arlette Salal – Product
+Arlette Salal – Product Manager
 Eduardo Ruiz – Backend / Infra
-Natalia (…) – Frontend
-María Eugenia Funes – UX / Marketplace
+Natalia Salvatierra – Frontend
+María Eugenia Funes – UX/UI Marketplace
 
 ## 11. Progress (First 24 Hours)
 
