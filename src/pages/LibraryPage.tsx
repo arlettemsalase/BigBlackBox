@@ -6,17 +6,9 @@ import { Header } from "@/components/header"
 import { ContentCard } from "@/components/content-card"
 import { Button } from "@/components/ui/button"
 import { mockContents } from "@/lib/mock-data"
-import type { ContentType, Purchase } from "@/lib/types"
-
-const filters: { label: string; value: ContentType | "all" }[] = [
-  { label: "All", value: "all" },
-  { label: "Videos", value: "video" },
-  { label: "eBooks", value: "ebook" },
-  { label: "Courses", value: "course" },
-]
+import type { Purchase } from "@/lib/types"
 
 export default function LibraryPage() {
-  const [activeFilter, setActiveFilter] = useState<ContentType | "all">("all")
   const [purchases, setPurchases] = useState<Purchase[]>([])
 
   useEffect(() => {
@@ -31,35 +23,18 @@ export default function LibraryPage() {
     return mockContents.filter((c) => purchasedIds.includes(c.id)).map((c) => ({ ...c, isOwned: true }))
   }, [purchases])
 
-  const filteredContents = useMemo(() => {
-    return ownedContents.filter((content) => {
-      return activeFilter === "all" || content.type === activeFilter
-    })
-  }, [ownedContents, activeFilter])
+  const filteredContents = ownedContents
 
   return (
     <div className="min-h-screen">
       <Header />
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-8 space-y-4">
+        <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">My Library</h1>
-
-          <div className="flex flex-wrap gap-2">
-            {filters.map((filter) => (
-              <Button
-                key={filter.value}
-                variant={activeFilter === filter.value ? "default" : "outline"}
-                onClick={() => setActiveFilter(filter.value)}
-                className={activeFilter === filter.value ? "bg-accent text-accent-foreground hover:bg-accent/90" : ""}
-              >
-                {filter.label}
-              </Button>
-            ))}
-          </div>
         </div>
 
         {filteredContents.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="columns-2 gap-4 md:columns-3 lg:gap-6">
             {filteredContents.map((content) => (
               <ContentCard key={content.id} content={content} />
             ))}

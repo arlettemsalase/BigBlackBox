@@ -8,13 +8,17 @@ interface ContentCardProps {
 
 export function ContentCard({ content }: ContentCardProps) {
   return (
-    <Link to={content.isOwned ? `/library/${content.id}` : `/content/${content.id}`} className="group block">
-      <div className="overflow-hidden rounded-lg bg-card transition-transform hover:scale-[1.02]">
-        <div className="relative aspect-video overflow-hidden">
+    <Link 
+      to={content.isOwned ? `/library/${content.id}` : `/content/${content.id}`} 
+      className="group block mb-4 break-inside-avoid"
+    >
+      <div className="overflow-hidden rounded-lg bg-card transition-all hover:shadow-xl">
+        <div className="relative overflow-hidden">
           <img
             src={content.thumbnail || "/placeholder.svg"}
             alt={content.title}
-            className="h-full w-full object-cover transition-transform group-hover:scale-105"
+            className="w-full object-cover transition-transform group-hover:scale-105"
+            style={{ aspectRatio: `${content.width}/${content.height}` }}
           />
           {content.isOwned && (
             <div className="absolute right-2 top-2">
@@ -22,10 +26,10 @@ export function ContentCard({ content }: ContentCardProps) {
             </div>
           )}
         </div>
-        <div className="space-y-2 p-4">
-          <h3 className="line-clamp-1 font-semibold text-foreground">{content.title}</h3>
-          <p className="text-sm text-muted-foreground">By {content.creator}</p>
-          <p className="text-lg font-bold text-secondary">${content.price}</p>
+        <div className="space-y-1 p-3">
+          <h3 className="line-clamp-2 font-semibold text-sm text-foreground">{content.title}</h3>
+          <p className="text-xs text-muted-foreground">By {content.creator}</p>
+          <p className="text-base font-bold text-primary">${content.price}</p>
         </div>
       </div>
     </Link>

@@ -8,7 +8,6 @@ import DiscoverPage from "@/pages/DiscoverPage"
 import ContentDetailPage from "@/pages/ContentDetailPage"
 import LibraryPage from "@/pages/LibraryPage"
 import LibraryContentPage from "@/pages/LibraryContentPage"
-import ReviewPage from "@/pages/ReviewPage"
 
 function AppContent() {
   const { 
@@ -28,7 +27,6 @@ function AppContent() {
         <Route path="/connect" element={<ConnectPage />} />
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/content/:id" element={<ContentDetailPage />} />
-        <Route path="/content/:id/review" element={<ReviewPage />} />
         <Route path="/library" element={<LibraryPage />} />
         <Route path="/library/:id" element={<LibraryContentPage />} />
       </Routes>

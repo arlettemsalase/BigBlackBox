@@ -1,5 +1,5 @@
-import type { Content, Purchase, Review } from "./types"
-import { mockContents, mockReviews } from "./mock-data"
+import type { Content, Purchase } from "./types"
+import { mockContents } from "./mock-data"
 
 // ============================================
 // PURCHASES (STELLAR TRANSACTIONS)
@@ -72,43 +72,6 @@ export const getOwnedContent = async (): Promise<Content[]> => {
   return mockContents.filter((c) => ownedIds.includes(c.id)).map((c) => ({ ...c, isOwned: true }))
 }
 
-// ============================================
-// REVIEWS
-// ============================================
-
-export const submitReview = async (review: Omit<Review, "id" | "createdAt" | "userName">): Promise<Review> => {
-  // Check if user owns the content
-  if (!hasUserPurchased(review.contentId)) {
-    throw new Error("You must purchase this content before leaving a review")
-  }
-
-  // Simulate API delay
-  await new Promise((resolve) => setTimeout(resolve, 800))
-
-  const newReview: Review = {
-    ...review,
-    id: "review_" + Math.random().toString(36).substring(2, 15),
-    createdAt: new Date().toISOString(),
-    userName: "Anonymous User",
-  }
-
-  // Save to localStorage (simulating database)
-  const reviews = getReviews()
-  reviews.push(newReview)
-  localStorage.setItem("reviews", JSON.stringify(reviews))
-
-  return newReview
-}
-
-export const getReviews = (): Review[] => {
-  const data = localStorage.getItem("reviews")
-  return data ? JSON.parse(data) : [...mockReviews] // Start with some mock reviews
-}
-
-export const getReviewsByContentId = (contentId: string): Review[] => {
-  const allReviews = getReviews()
-  return allReviews.filter((r) => r.contentId === contentId)
-}
 
 // ============================================
 // STELLAR WALLET (MOCK)

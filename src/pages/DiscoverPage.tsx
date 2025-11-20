@@ -8,10 +8,11 @@ export default function DiscoverPage() {
       <Header />
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold md:text-4xl">Explore Content</h1>
+          <h1 className="text-3xl font-bold md:text-4xl">Explore Images</h1>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {/* Pinterest-style masonry layout */}
+        <div className="columns-2 gap-4 md:columns-3 lg:gap-6">
           {mockContents.map((content) => (
             <ContentCard key={content.id} content={content} />
           ))}
