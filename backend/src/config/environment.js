@@ -30,3 +30,4 @@ for (const key of required) {
     throw new Error(`Falta la variable de entorno requerida: ${key}`);
   }
 }
+export default config;
