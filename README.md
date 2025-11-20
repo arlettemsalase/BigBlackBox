@@ -173,10 +173,10 @@ Postgres almacena y recupera metadatos correctamente.
 
 BBB Team
 Andrea Junes – Backend & ZK
-Arlette Salal – Product
+Arlette Salal – Product Manager
 Eduardo Ruiz – Backend / Infra
-Natalia (…) – Frontend
-María Eugenia Funes – UX / Marketplace
+Natalia Salvatierra – Frontend
+María Eugenia Funes – UX/UI Marketplace
 
 ## 11. Progreso (primeras 24 horas)
 
