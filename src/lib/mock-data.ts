@@ -9,7 +9,7 @@ export const mockContents: Content[] = [
     description: "Beautiful anime artwork featuring cherry blossoms and serene atmosphere.",
     thumbnail: "/anime1_marked.png",
     width: 1024,
-    height: 1536,
+    height: 1400,
   },
   {
     id: "2",
@@ -19,7 +19,7 @@ export const mockContents: Content[] = [
     description: "Cyberpunk-inspired anime illustration with vibrant neon colors.",
     thumbnail: "/anime2_blur.png",
     width: 1024,
-    height: 1536,
+    height: 1800,
   },
   {
     id: "3",
@@ -29,7 +29,7 @@ export const mockContents: Content[] = [
     description: "Enchanting underwater scene with mystical marine elements.",
     thumbnail: "/anime3_blur.png",
     width: 1024,
-    height: 1536,
+    height: 1200,
   },
   {
     id: "4",
@@ -39,7 +39,7 @@ export const mockContents: Content[] = [
     description: "Epic fantasy character design with celestial themes.",
     thumbnail: "/anime4_marked.png",
     width: 1024,
-    height: 1536,
+    height: 1600,
   },
   {
     id: "5",
@@ -49,7 +49,7 @@ export const mockContents: Content[] = [
     description: "Warm autumn scene with falling leaves and nostalgic mood.",
     thumbnail: "/anime5_marked.png",
     width: 1024,
-    height: 1536,
+    height: 1350,
   },
   {
     id: "6",
@@ -59,7 +59,7 @@ export const mockContents: Content[] = [
     description: "Peaceful night garden illuminated by soft moonlight.",
     thumbnail: "/anime6_marked.png",
     width: 1024,
-    height: 1536,
+    height: 1500,
   },
   {
     id: "7",
@@ -69,7 +69,7 @@ export const mockContents: Content[] = [
     description: "Majestic dragon artwork with sunrise background.",
     thumbnail: "/anime7_marked.png",
     width: 1024,
-    height: 1536,
+    height: 1700,
   },
   {
     id: "8",
@@ -79,7 +79,7 @@ export const mockContents: Content[] = [
     description: "Snowy landscape with magical winter atmosphere.",
     thumbnail: "/anime8_blur.png",
     width: 1024,
-    height: 1536,
+    height: 1300,
   },
   {
     id: "9",
@@ -89,7 +89,7 @@ export const mockContents: Content[] = [
     description: "Powerful phoenix illustration with flames and rebirth symbolism.",
     thumbnail: "/anime9_marked.png",
     width: 1024,
-    height: 1536,
+    height: 1900,
   },
   {
     id: "10",
@@ -99,6 +99,6 @@ export const mockContents: Content[] = [
     description: "Ethereal character dancing among stars and cosmic elements.",
     thumbnail: "/anime10_blur.png",
     width: 1024,
-    height: 1536,
+    height: 1250,
   }
 ]
