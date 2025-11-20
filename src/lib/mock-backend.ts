@@ -55,11 +55,20 @@ export const getContentById = async (id: string): Promise<Content | null> => {
   const content = mockContents.find((c) => c.id === id)
   if (!content) return null
 
-  // Add ownership status
+  const isOwned = hasUserPurchased(id)
+
+  // Add ownership status and update thumbnail to full version if owned
   return {
     ...content,
-    isOwned: hasUserPurchased(id),
+    isOwned,
+    thumbnail: isOwned ? getFullImageUrl(content.thumbnail, id) : content.thumbnail,
   }
+}
+
+// Helper function to get full image URL (without watermark/blur) for owned content
+const getFullImageUrl = (_previewUrl: string, contentId: string): string => {
+  // Replace _marked.png or _blur.png with .avif for owned content
+  return `/anime${contentId}.avif`
 }
 
 export const getOwnedContent = async (): Promise<Content[]> => {
@@ -69,7 +78,11 @@ export const getOwnedContent = async (): Promise<Content[]> => {
   const purchases = getPurchases()
   const ownedIds = purchases.map((p) => p.contentId)
 
-  return mockContents.filter((c) => ownedIds.includes(c.id)).map((c) => ({ ...c, isOwned: true }))
+  return mockContents.filter((c) => ownedIds.includes(c.id)).map((c) => ({ 
+    ...c, 
+    isOwned: true,
+    thumbnail: getFullImageUrl(c.thumbnail, c.id)
+  }))
 }
 
 
