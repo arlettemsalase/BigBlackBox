@@ -1,7 +1,6 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import { connectWallet as mockConnectWallet } from "./mock-backend"
 
 interface WalletContextType {
   isConnected: boolean
@@ -10,6 +9,11 @@ interface WalletContextType {
   disconnect: () => void
   isLoading: boolean
   error: string | null
+  showFreighterModal: boolean
+  setShowFreighterModal: (show: boolean) => void
+  freighterMode: "connect" | "sign"
+  setFreighterMode: (mode: "connect" | "sign") => void
+  handleFreighterConnect: (address: string) => void
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined)
@@ -19,6 +23,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [address, setAddress] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [showFreighterModal, setShowFreighterModal] = useState(false)
+  const [freighterMode, setFreighterMode] = useState<"connect" | "sign">("connect")
 
   useEffect(() => {
     const savedAddress = localStorage.getItem("stellar_address")
@@ -29,19 +35,29 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const connect = async () => {
-    setIsLoading(true)
-    setError(null)
+    return new Promise<void>((resolve, reject) => {
+      setIsLoading(true)
+      setError(null)
+      setFreighterMode("connect")
+      setShowFreighterModal(true)
+      
+      // Store resolve/reject for later use
+      ;(window as any).__walletConnectResolve = resolve
+      ;(window as any).__walletConnectReject = reject
+    })
+  }
 
-    try {
-      const mockAddress = await mockConnectWallet()
-      setAddress(mockAddress)
-      setIsConnected(true)
-      localStorage.setItem("stellar_address", mockAddress)
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Connection failed")
-      throw err
-    } finally {
-      setIsLoading(false)
+  const handleFreighterConnect = (newAddress: string) => {
+    setAddress(newAddress)
+    setIsConnected(true)
+    localStorage.setItem("stellar_address", newAddress)
+    setIsLoading(false)
+    setShowFreighterModal(false)
+    
+    if ((window as any).__walletConnectResolve) {
+      ;(window as any).__walletConnectResolve()
+      delete (window as any).__walletConnectResolve
+      delete (window as any).__walletConnectReject
     }
   }
 
@@ -52,7 +68,19 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <WalletContext.Provider value={{ isConnected, address, connect, disconnect, isLoading, error }}>
+    <WalletContext.Provider value={{ 
+      isConnected, 
+      address, 
+      connect, 
+      disconnect, 
+      isLoading, 
+      error,
+      showFreighterModal,
+      setShowFreighterModal,
+      freighterMode,
+      setFreighterMode,
+      handleFreighterConnect
+    }}>
       {children}
     </WalletContext.Provider>
   )

@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom"
-import { WalletProvider } from "@/lib/wallet-context"
+import { WalletProvider, useWallet } from "@/lib/wallet-context"
 import { Toaster } from "@/components/ui/sonner"
+import { FreighterModal } from "@/components/freighter-modal"
 import ConnectPage from "@/pages/ConnectPage"
 import DiscoverPage from "@/pages/DiscoverPage"
 import ContentDetailPage from "@/pages/ContentDetailPage"
@@ -8,9 +9,11 @@ import LibraryPage from "@/pages/LibraryPage"
 import LibraryContentPage from "@/pages/LibraryContentPage"
 import ReviewPage from "@/pages/ReviewPage"
 
-function App() {
+function AppContent() {
+  const { showFreighterModal, setShowFreighterModal, freighterMode, handleFreighterConnect } = useWallet()
+
   return (
-    <WalletProvider>
+    <>
       <Routes>
         <Route path="/" element={<Navigate to="/discover" replace />} />
         <Route path="/connect" element={<ConnectPage />} />
@@ -21,6 +24,21 @@ function App() {
         <Route path="/library/:id" element={<LibraryContentPage />} />
       </Routes>
       <Toaster />
+      {showFreighterModal && (
+        <FreighterModal
+          mode={freighterMode}
+          onClose={() => setShowFreighterModal(false)}
+          onConnect={handleFreighterConnect}
+        />
+      )}
+    </>
+  )
+}
+
+function App() {
+  return (
+    <WalletProvider>
+      <AppContent />
     </WalletProvider>
   )
 }

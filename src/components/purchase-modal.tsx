@@ -6,6 +6,7 @@ import type { Content } from "@/lib/types"
 import { purchaseContent } from "@/lib/mock-backend"
 import { useWallet } from "@/lib/wallet-context"
 import { Button } from "@/components/ui/button"
+import { FreighterModal } from "@/components/freighter-modal"
 
 interface PurchaseModalProps {
   content: Content
@@ -19,6 +20,7 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isConnecting, setIsConnecting] = useState(false)
+  const [showFreighter, setShowFreighter] = useState(false)
 
   const handleConnect = async () => {
     setIsConnecting(true)
@@ -38,24 +40,46 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
 
     setIsProcessing(true)
     setError(null)
+    setShowFreighter(true)
 
-    try {
-      await purchaseContent(content.id, address)
-      setIsProcessing(false)
-      setIsSuccess(true)
+    // Simulate Freighter transaction signing
+    setTimeout(async () => {
+      try {
+        await purchaseContent(content.id, address)
+        setIsProcessing(false)
+        setShowFreighter(false)
+        setIsSuccess(true)
 
-      setTimeout(() => {
-        onSuccess()
-      }, 1500)
-    } catch (err) {
-      setIsProcessing(false)
-      setError(err instanceof Error ? err.message : "Purchase failed")
-    }
+        setTimeout(() => {
+          onSuccess()
+        }, 1500)
+      } catch (err) {
+        setIsProcessing(false)
+        setShowFreighter(false)
+        setError(err instanceof Error ? err.message : "Purchase failed")
+      }
+    }, 100)
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-      <div className="relative w-full max-w-md rounded-lg bg-card p-6 shadow-lg">
+    <>
+      {showFreighter && (
+        <FreighterModal
+          mode="sign"
+          onClose={() => {
+            setShowFreighter(false)
+            setIsProcessing(false)
+          }}
+          onConnect={() => {}}
+          transactionDetails={{
+            amount: content.price.toString(),
+            recipient: "Creator",
+            contentTitle: content.title
+          }}
+        />
+      )}
+      <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div className="relative w-full max-w-md rounded-lg bg-card p-6 shadow-lg">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 rounded-sm opacity-70 hover:opacity-100"
@@ -145,5 +169,6 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
         </div>
       </div>
     </div>
+    </>
   )
 }
