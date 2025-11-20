@@ -6,7 +6,7 @@ export default function DiscoverPage() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="container mx-auto px-4 py-8">
+      <main className="mx-auto max-w-[1200px] px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold md:text-4xl">Explore Images</h1>
         </div>
