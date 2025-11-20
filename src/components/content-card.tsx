@@ -7,14 +7,6 @@ interface ContentCardProps {
 }
 
 export function ContentCard({ content }: ContentCardProps) {
-  const typeLabels: Record<string, string> = {
-    video: "Video",
-    audio: "Audio",
-    ebook: "E-Book",
-    course: "Course",
-    image: "Image",
-  }
-
   return (
     <Link to={content.isOwned ? `/library/${content.id}` : `/content/${content.id}`} className="group block">
       <div className="overflow-hidden rounded-lg bg-card transition-transform hover:scale-[1.02]">
@@ -24,13 +16,8 @@ export function ContentCard({ content }: ContentCardProps) {
             alt={content.title}
             className="h-full w-full object-cover transition-transform group-hover:scale-105"
           />
-          <div className="absolute right-2 top-2">
-            <Badge variant="secondary" className="bg-black/60 text-white backdrop-blur">
-              {typeLabels[content.type]}
-            </Badge>
-          </div>
           {content.isOwned && (
-            <div className="absolute left-2 top-2">
+            <div className="absolute right-2 top-2">
               <Badge className="bg-secondary text-secondary-foreground">Owned</Badge>
             </div>
           )}
