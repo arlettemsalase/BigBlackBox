@@ -3,10 +3,9 @@
 import { useState } from "react"
 import { X, Loader2, CheckCircle2, Wallet } from "lucide-react"
 import type { Content } from "@/lib/types"
-import { purchaseContent } from "@/lib/mock-backend"
+import { paymentHandler } from "@/lib/blockchain/payment-handler"
 import { useWallet } from "@/lib/wallet-context"
 import { Button } from "@/components/ui/button"
-import { FreighterModal } from "@/components/freighter-modal"
 
 interface PurchaseModalProps {
   content: Content
@@ -20,7 +19,7 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isConnecting, setIsConnecting] = useState(false)
-  const [showFreighter, setShowFreighter] = useState(false)
+  const [txHash, setTxHash] = useState<string | null>(null)
 
   const handleConnect = async () => {
     setIsConnecting(true)
@@ -40,44 +39,58 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
 
     setIsProcessing(true)
     setError(null)
-    setShowFreighter(true)
 
-    // Simulate Freighter transaction signing
-    setTimeout(async () => {
-      try {
-        await purchaseContent(content.id, address)
-        setIsProcessing(false)
-        setShowFreighter(false)
+    try {
+      console.log('🛒 Iniciando compra de:', content.title)
+      console.log('💰 Precio:', content.price, 'XLM')
+      console.log('👤 Creador:', content.creator)
+      
+      // Usar la dirección del creador desde variables de entorno (testnet)
+      // En producción, esto vendría del metadata del contenido
+      const creatorAddress = import.meta.env.VITE_CREATOR_PUBLIC_KEY
+      
+      if (!creatorAddress) {
+        throw new Error('Creator address not configured')
+      }
+      
+      console.log('📬 Enviando pago a:', creatorAddress)
+      
+      const result = await paymentHandler.purchaseContent(
+        creatorAddress,
+        content.price,
+        content.id
+      )
+
+      if (result.success) {
+        console.log('✅ Compra exitosa!')
+        console.log('📝 Hash de transacción:', result.hash)
+        setTxHash(result.hash || null)
         setIsSuccess(true)
+        
+        // Guardar compra en localStorage
+        const purchases = JSON.parse(localStorage.getItem('purchases') || '[]')
+        purchases.push({
+          contentId: content.id,
+          purchaseDate: new Date().toISOString(),
+          transactionHash: result.hash
+        })
+        localStorage.setItem('purchases', JSON.stringify(purchases))
 
         setTimeout(() => {
           onSuccess()
-        }, 1500)
-      } catch (err) {
-        setIsProcessing(false)
-        setShowFreighter(false)
-        setError(err instanceof Error ? err.message : "Purchase failed")
+        }, 2000)
+      } else {
+        throw new Error(result.error || 'Purchase failed')
       }
-    }, 100)
+    } catch (err: any) {
+      console.error('❌ Error en compra:', err)
+      setError(err.message || "Purchase failed")
+    } finally {
+      setIsProcessing(false)
+    }
   }
 
   return (
-    <>
-      {showFreighter && (
-        <FreighterModal
-          mode="sign"
-          onClose={() => {
-            setShowFreighter(false)
-            setIsProcessing(false)
-          }}
-          onConnect={() => {}}
-          transactionDetails={{
-            amount: content.price.toString(),
-            recipient: "Creator",
-            contentTitle: content.title
-          }}
-        />
-      )}
       <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm">
         <div className="relative w-full max-w-md rounded-lg bg-card p-6 shadow-lg">
         <button
@@ -99,7 +112,7 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
           <div className="rounded-lg bg-muted p-4">
             <div className="flex justify-between items-center">
               <span className="text-sm">Price</span>
-              <span className="text-xl font-bold">${content.price}</span>
+              <span className="text-xl font-bold">{content.price} XLM</span>
             </div>
           </div>
 
@@ -113,6 +126,12 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
             <div className="flex flex-col items-center gap-3 py-4">
               <CheckCircle2 className="h-12 w-12 text-green-500" />
               <p className="text-lg font-semibold">Purchase Successful!</p>
+              {txHash && (
+                <div className="text-center">
+                  <p className="text-xs text-muted-foreground mb-1">Transaction Hash:</p>
+                  <p className="text-xs font-mono break-all px-4">{txHash}</p>
+                </div>
+              )}
             </div>
           ) : !isConnected ? (
             <div className="space-y-4">
@@ -158,7 +177,7 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
                     Processing...
                   </>
                 ) : (
-                  `Purchase for $${content.price}`
+                  `Purchase for ${content.price} XLM`
                 )}
               </Button>
               <Button variant="outline" onClick={onClose} disabled={isProcessing}>
@@ -169,6 +188,5 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
         </div>
       </div>
     </div>
-    </>
   )
 }

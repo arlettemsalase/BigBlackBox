@@ -91,7 +91,7 @@ export default function ContentDetailPage() {
             <div className="bg-muted p-4 rounded-lg mb-6">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-muted-foreground">Price</span>
-                <span className="text-2xl font-bold">${content.price}</span>
+                <span className="text-2xl font-bold">{content.price} XLM</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Dimensions</span>
@@ -111,7 +111,7 @@ export default function ContentDetailPage() {
                 onClick={() => setShowPurchaseModal(true)}
               >
                 <ShoppingCart className="mr-2 h-5 w-5" />
-                Purchase for ${content.price}
+                Purchase for {content.price} XLM
               </Button>
             )}
           </div>

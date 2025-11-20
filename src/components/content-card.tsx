@@ -29,7 +29,7 @@ export function ContentCard({ content }: ContentCardProps) {
         <div className="space-y-1 p-3">
           <h3 className="line-clamp-2 font-semibold text-sm text-foreground">{content.title}</h3>
           <p className="text-xs text-muted-foreground">By {content.creator}</p>
-          <p className="text-base font-bold text-primary">${content.price}</p>
+          <p className="text-base font-bold text-primary">{content.price} XLM</p>
         </div>
       </div>
     </Link>

@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { X, Check } from "lucide-react"
+import { X, Check, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { freighterWallet } from "@/lib/wallet/freighter"
 
 interface FreighterModalProps {
   onClose: () => void
@@ -16,26 +17,38 @@ interface FreighterModalProps {
 }
 
 export function FreighterModal({ onClose, onConnect, mode, transactionDetails }: FreighterModalProps) {
-  const [step, setStep] = useState<"initial" | "processing" | "success">("initial")
-  const [mockAddress] = useState(() => 
-    "G" + Math.random().toString(36).substring(2, 15).toUpperCase() + 
-    Math.random().toString(36).substring(2, 15).toUpperCase()
-  )
+  const [step, setStep] = useState<"initial" | "processing" | "success" | "error">("initial")
+  const [address, setAddress] = useState<string>("")
+  const [error, setError] = useState<string>("")
 
   useEffect(() => {
-    if (step === "success") {
+    if (step === "success" && address) {
       setTimeout(() => {
-        onConnect(mockAddress)
+        onConnect(address)
         onClose()
       }, 1000)
     }
-  }, [step, mockAddress, onConnect, onClose])
+  }, [step, address, onConnect, onClose])
 
-  const handleApprove = () => {
+  const handleApprove = async () => {
     setStep("processing")
-    setTimeout(() => {
-      setStep("success")
-    }, 1500)
+    setError("")
+    
+    try {
+      if (mode === "connect") {
+        // Conectar wallet real
+        const publicKey = await freighterWallet.connect()
+        setAddress(publicKey)
+        setStep("success")
+      } else {
+        // Modo sign (para transacciones)
+        setStep("success")
+      }
+    } catch (err: any) {
+      console.error("Error en Freighter:", err)
+      setError(err.message || "Error al conectar con Freighter")
+      setStep("error")
+    }
   }
 
   return (
@@ -71,8 +84,8 @@ export function FreighterModal({ onClose, onConnect, mode, transactionDetails }:
                     This site would like to connect to your Freighter wallet
                   </p>
                   <div className="rounded-lg bg-purple-500/10 border border-purple-500/20 p-3">
-                    <p className="text-xs text-gray-400 mb-1">Your address</p>
-                    <p className="text-sm text-white font-mono break-all">{mockAddress}</p>
+                    <p className="text-xs text-gray-400 mb-1">Waiting for Freighter...</p>
+                    <p className="text-sm text-gray-400">Please approve the connection in your Freighter wallet</p>
                   </div>
                 </div>
               ) : (
@@ -93,7 +106,7 @@ export function FreighterModal({ onClose, onConnect, mode, transactionDetails }:
                   </div>
                   <div className="rounded-lg bg-purple-500/10 border border-purple-500/20 p-3">
                     <p className="text-xs text-gray-400 mb-1">From</p>
-                    <p className="text-xs text-white font-mono break-all">{mockAddress}</p>
+                    <p className="text-xs text-white font-mono break-all">{address || "Loading..."}</p>
                   </div>
                 </div>
               )}
@@ -133,6 +146,27 @@ export function FreighterModal({ onClose, onConnect, mode, transactionDetails }:
               <p className="text-white font-medium">
                 {mode === "connect" ? "Connected!" : "Transaction approved!"}
               </p>
+              {address && (
+                <p className="text-xs text-gray-400 font-mono break-all text-center px-4">
+                  {address}
+                </p>
+              )}
+            </div>
+          )}
+
+          {step === "error" && (
+            <div className="flex flex-col items-center gap-4 py-8">
+              <div className="h-16 w-16 rounded-full bg-red-500/20 flex items-center justify-center">
+                <AlertCircle className="h-8 w-8 text-red-500" />
+              </div>
+              <p className="text-white font-medium">Connection Failed</p>
+              <p className="text-sm text-gray-400 text-center px-4">{error}</p>
+              <Button
+                onClick={() => setStep("initial")}
+                className="bg-purple-500 hover:bg-purple-600 text-white"
+              >
+                Try Again
+              </Button>
             </div>
           )}
         </div>
