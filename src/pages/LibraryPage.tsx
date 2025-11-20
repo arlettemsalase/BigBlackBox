@@ -11,8 +11,8 @@ import type { ContentType, Purchase } from "@/lib/types"
 const filters: { label: string; value: ContentType | "all" }[] = [
   { label: "All", value: "all" },
   { label: "Videos", value: "video" },
-  { label: "PDFs", value: "pdf" },
-  { label: "Lives", value: "live-call" },
+  { label: "eBooks", value: "ebook" },
+  { label: "Courses", value: "course" },
 ]
 
 export default function LibraryPage() {

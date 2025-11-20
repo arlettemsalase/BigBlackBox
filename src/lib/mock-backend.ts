@@ -5,7 +5,7 @@ import { mockContents, mockReviews } from "./mock-data"
 // PURCHASES (STELLAR TRANSACTIONS)
 // ============================================
 
-export const purchaseContent = async (contentId: string, walletAddress: string): Promise<Purchase> => {
+export const purchaseContent = async (contentId: string, _walletAddress: string): Promise<Purchase> => {
   // Simulate blockchain transaction delay
   await new Promise((resolve) => setTimeout(resolve, 2500))
 

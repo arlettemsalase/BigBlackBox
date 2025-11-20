@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useParams, useNavigate, Link } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { ArrowLeft, Star, ShoppingCart, Download } from "lucide-react"
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
