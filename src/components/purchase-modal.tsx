@@ -4,6 +4,7 @@ import { useState } from "react"
 import { X, Loader2, CheckCircle2, Wallet } from "lucide-react"
 import type { Content } from "@/lib/types"
 import { paymentHandler } from "@/lib/blockchain/payment-handler"
+import { distributorContract } from "@/lib/blockchain/distributor-contract"
 import { useWallet } from "@/lib/wallet-context"
 import { Button } from "@/components/ui/button"
 
@@ -55,11 +56,23 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
       
       console.log('📬 Enviando pago a:', creatorAddress)
       
-      const result = await paymentHandler.purchaseContent(
-        creatorAddress,
-        content.price,
-        content.id
-      )
+      // Verificar si el contrato está configurado
+      let result
+      if (distributorContract.isConfigured()) {
+        console.log('🔧 Usando contrato distributor')
+        result = await distributorContract.purchaseContent(
+          creatorAddress,
+          content.price,
+          content.id
+        )
+      } else {
+        console.log('💳 Usando pago directo (contrato no configurado)')
+        result = await paymentHandler.purchaseContent(
+          creatorAddress,
+          content.price,
+          content.id
+        )
+      }
 
       if (result.success) {
         console.log('✅ Compra exitosa!')
@@ -76,9 +89,7 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
         })
         localStorage.setItem('purchases', JSON.stringify(purchases))
 
-        setTimeout(() => {
-          onSuccess()
-        }, 2000)
+        // No cerrar automáticamente - el usuario decide cuándo cerrar
       } else {
         throw new Error(result.error || 'Purchase failed')
       }
@@ -123,15 +134,30 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
           )}
 
           {isSuccess ? (
-            <div className="flex flex-col items-center gap-3 py-4">
-              <CheckCircle2 className="h-12 w-12 text-green-500" />
-              <p className="text-lg font-semibold">Purchase Successful!</p>
-              {txHash && (
-                <div className="text-center">
-                  <p className="text-xs text-muted-foreground mb-1">Transaction Hash:</p>
-                  <p className="text-xs font-mono break-all px-4">{txHash}</p>
-                </div>
-              )}
+            <div className="space-y-4">
+              <div className="flex flex-col items-center gap-3 py-4">
+                <CheckCircle2 className="h-12 w-12 text-green-500" />
+                <p className="text-lg font-semibold">Purchase Successful!</p>
+                {txHash && (
+                  <div className="text-center w-full">
+                    <p className="text-xs text-muted-foreground mb-2">Transaction Hash:</p>
+                    <div className="bg-muted rounded p-2">
+                      <p className="text-xs font-mono break-all select-all">{txHash}</p>
+                    </div>
+                    <a 
+                      href={`https://stellar.expert/explorer/testnet/tx/${txHash}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-primary hover:underline mt-2 inline-block"
+                    >
+                      View on Stellar Expert →
+                    </a>
+                  </div>
+                )}
+              </div>
+              <Button onClick={onClose} className="w-full">
+                Close
+              </Button>
             </div>
           ) : !isConnected ? (
             <div className="space-y-4">

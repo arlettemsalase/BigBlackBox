@@ -100,5 +100,25 @@ export const mockContents: Content[] = [
     thumbnail: "/anime10_blur.png",
     width: 1024,
     height: 1250,
+  },
+  {
+    id: "11",
+    title: "Mystic Forest",
+    creator: "Takeshi Ishida",
+    price: 16,
+    description: "Enchanted forest scene with magical creatures and glowing flora.",
+    thumbnail: "/anime11_blur.png",
+    width: 1024,
+    height: 1450,
+  },
+  {
+    id: "12",
+    title: "Crimson Sunset",
+    creator: "Haruka Kimura",
+    price: 28,
+    description: "Dramatic sunset landscape with silhouetted character and warm tones.",
+    thumbnail: "/anime12_blur.png",
+    width: 1024,
+    height: 1550,
   }
 ]

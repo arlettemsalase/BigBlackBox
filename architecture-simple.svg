@@ -1,0 +1,102 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#000000"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#D866E6" text-anchor="middle">
+    BIGBLACKBOX - Arquitectura MVP
+  </text>
+  
+  <!-- Layer 1: Frontend -->
+  <rect x="50" y="80" width="700" height="80" fill="#1a1a1a" stroke="#D866E6" stroke-width="3" rx="10"/>
+  <text x="400" y="110" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#D866E6" text-anchor="middle">
+    FRONTEND (React + TypeScript)
+  </text>
+  <text x="400" y="135" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">
+    Connect | Discover | Content Detail | Library
+  </text>
+  
+  <!-- Arrow 1 -->
+  <line x1="400" y1="160" x2="400" y2="190" stroke="#FAE60D" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Layer 2: State Management -->
+  <rect x="50" y="190" width="340" height="80" fill="#1a1a1a" stroke="#D866E6" stroke-width="2" rx="10"/>
+  <text x="220" y="220" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#D866E6" text-anchor="middle">
+    Wallet Context
+  </text>
+  <text x="220" y="245" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">
+    • isConnected • address
+  </text>
+  
+  <rect x="410" y="190" width="340" height="80" fill="#1a1a1a" stroke="#D866E6" stroke-width="2" rx="10"/>
+  <text x="580" y="220" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#D866E6" text-anchor="middle">
+    Mock Backend API
+  </text>
+  <text x="580" y="245" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">
+    • purchaseContent() • getOwnedContent()
+  </text>
+  
+  <!-- Arrow 2 -->
+  <line x1="220" y1="270" x2="220" y2="300" stroke="#FAE60D" stroke-width="3"/>
+  <line x1="580" y1="270" x2="580" y2="300" stroke="#FAE60D" stroke-width="3"/>
+  <line x1="220" y1="300" x2="400" y2="300" stroke="#FAE60D" stroke-width="3"/>
+  <line x1="580" y1="300" x2="400" y2="300" stroke="#FAE60D" stroke-width="3"/>
+  <line x1="400" y1="300" x2="400" y2="330" stroke="#FAE60D" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Layer 3: Blockchain Integration -->
+  <rect x="50" y="330" width="700" height="100" fill="#1a1a1a" stroke="#8B5CF6" stroke-width="3" rx="10"/>
+  <text x="400" y="360" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#8B5CF6" text-anchor="middle">
+    BLOCKCHAIN INTEGRATION
+  </text>
+  
+  <rect x="80" y="375" width="200" height="40" fill="#2a2a2a" stroke="#8B5CF6" stroke-width="2" rx="5"/>
+  <text x="180" y="400" font-family="Arial, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">
+    Freighter Wallet
+  </text>
+  
+  <rect x="300" y="375" width="200" height="40" fill="#2a2a2a" stroke="#8B5CF6" stroke-width="2" rx="5"/>
+  <text x="400" y="400" font-family="Arial, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">
+    Payment Handler
+  </text>
+  
+  <rect x="520" y="375" width="200" height="40" fill="#2a2a2a" stroke="#8B5CF6" stroke-width="2" rx="5"/>
+  <text x="620" y="400" font-family="Arial, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle">
+    Transaction Service
+  </text>
+  
+  <!-- Arrow 3 -->
+  <line x1="400" y1="430" x2="400" y2="460" stroke="#FAE60D" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Layer 4: Stellar Network -->
+  <rect x="50" y="460" width="700" height="80" fill="#FAE60D" stroke="#D866E6" stroke-width="3" rx="10"/>
+  <text x="400" y="490" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#000000" text-anchor="middle">
+    ⭐ STELLAR NETWORK (TESTNET)
+  </text>
+  <text x="400" y="515" font-family="Arial, sans-serif" font-size="14" fill="#000000" text-anchor="middle">
+    Horizon API • XLM Payments • Transaction History
+  </text>
+  
+  <!-- Arrow 4 -->
+  <line x1="400" y1="540" x2="400" y2="560" stroke="#D866E6" stroke-width="3" marker-end="url(#arrowhead2)"/>
+  
+  <!-- Layer 5: Data -->
+  <rect x="150" y="560" width="200" height="30" fill="#1a1a1a" stroke="#D866E6" stroke-width="2" rx="5"/>
+  <text x="250" y="580" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">
+    LocalStorage
+  </text>
+  
+  <rect x="450" y="560" width="200" height="30" fill="#1a1a1a" stroke="#D866E6" stroke-width="2" rx="5"/>
+  <text x="550" y="580" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">
+    Blockchain Records
+  </text>
+  
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#FAE60D"/>
+    </marker>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#D866E6"/>
+    </marker>
+  </defs>
+</svg>

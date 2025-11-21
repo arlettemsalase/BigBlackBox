@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import { Box, Loader2, AlertCircle } from "lucide-react"
+import { Loader2, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useWallet } from "@/lib/wallet-context"
 import { Alert, AlertDescription } from "@/components/ui/alert"
@@ -31,7 +31,11 @@ export default function ConnectPage() {
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
       <div className="w-full max-w-md space-y-8 text-center">
         <div className="flex justify-center">
-          <Box className="h-16 w-16 text-primary" />
+          <img 
+            src="/logo/logo_blanco.png" 
+            alt="Black Big Box" 
+            className="h-20 w-20 object-contain"
+          />
         </div>
 
         <div className="space-y-2">

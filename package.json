@@ -15,7 +15,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.3",
     "sonner": "^1.4.0",
-    "stellar-sdk": "^13.3.0",
+    "stellar-sdk": "^12.3.0",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7"
   },
