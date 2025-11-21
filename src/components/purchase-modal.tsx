@@ -11,10 +11,9 @@ import { Button } from "@/components/ui/button"
 interface PurchaseModalProps {
   content: Content
   onClose: () => void
-  onSuccess: () => void
 }
 
-export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProps) {
+export function PurchaseModal({ content, onClose }: PurchaseModalProps) {
   const { address, isConnected, connect } = useWallet()
   const [isProcessing, setIsProcessing] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
