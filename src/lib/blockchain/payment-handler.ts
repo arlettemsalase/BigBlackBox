@@ -90,7 +90,7 @@ export class PaymentHandler {
       const SDK = await loadStellarSDK()
 
       // 1. Validaciones previas
-      await this.validatePayment(destination, amount)
+      this.validatePayment(destination, amount)
 
       // 2. Obtener dirección del remitente
       const sourceAddress = await freighterWallet.getPublicKey()
@@ -107,13 +107,23 @@ export class PaymentHandler {
       let transactionBuilder = new SDK.TransactionBuilder(sourceAccount, {
         fee: SDK.BASE_FEE,
         networkPassphrase: this.networkPassphrase
-      })
-        .addOperation(SDK.Operation.payment({
+      }).setTimeout(180)
+
+      // Agregar operaciA3n de pago o createAccount si no existe la cuenta destino
+      const destinationExists = await TransactionService.checkAccountExists(destination)
+      if (destinationExists) {
+        transactionBuilder = transactionBuilder.addOperation(SDK.Operation.payment({
           destination,
           asset: SDK.Asset.native(),
           amount: amount.toString()
         }))
-        .setTimeout(180)
+      } else {
+        console.warn('Destino sin cuenta: se usara createAccount para fondearlo y pagar.')
+        transactionBuilder = transactionBuilder.addOperation(SDK.Operation.createAccount({
+          destination,
+          startingBalance: amount.toString()
+        }))
+      }
 
       // Agregar memo si existe
       if (memo) {
@@ -185,13 +195,6 @@ export class PaymentHandler {
     // Validar monto
     if (amount <= 0) {
       throw new Error('El monto debe ser mayor a 0')
-    }
-
-    // Verificar que la cuenta destino existe
-    console.log('🔍 Verificando cuenta destino...')
-    const exists = await TransactionService.checkAccountExists(destination)
-    if (!exists) {
-      throw new Error('La cuenta destino no existe en la blockchain')
     }
 
     // Verificar fondos suficientes

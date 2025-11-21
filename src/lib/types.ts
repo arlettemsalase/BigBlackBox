@@ -2,6 +2,7 @@ export interface Content {
   id: string
   title: string
   creator: string
+  creatorAddress?: string
   price: number
   description: string
   thumbnail: string

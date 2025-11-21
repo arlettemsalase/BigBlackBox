@@ -35,61 +35,56 @@ export function PurchaseModal({ content, onClose, onSuccess }: PurchaseModalProp
   }
 
   const handlePurchase = async () => {
-    if (!address) return
+    if (!address) {
+      setError("Connect your wallet to continue")
+      return
+    }
 
     setIsProcessing(true)
     setError(null)
 
     try {
-      console.log('🛒 Iniciando compra de:', content.title)
-      console.log('💰 Precio:', content.price, 'XLM')
-      console.log('👤 Creador:', content.creator)
-      
-      // Usar la dirección del creador desde variables de entorno (testnet)
-      // En producción, esto vendría del metadata del contenido
-      const creatorAddress = import.meta.env.VITE_CREATOR_PUBLIC_KEY
-      
+      console.log("Iniciando compra de:", content.title)
+      console.log("Precio:", content.price, "XLM")
+      console.log("Creador:", content.creator)
+
+      const creatorAddress = content.creatorAddress || import.meta.env.VITE_CREATOR_PUBLIC_KEY
+
       if (!creatorAddress) {
-        throw new Error('Creator address not configured')
+        throw new Error("Creator address not configured. Set content.creatorAddress or VITE_CREATOR_PUBLIC_KEY.")
       }
-      
-      console.log('📬 Enviando pago a:', creatorAddress)
-      
-      const result = await paymentHandler.purchaseContent(
-        creatorAddress,
-        content.price,
-        content.id
-      )
+
+      console.log("Enviando pago a:", creatorAddress)
+
+      const result = await paymentHandler.purchaseContent(creatorAddress, content.price, content.id)
 
       if (result.success) {
-        console.log('✅ Compra exitosa!')
-        console.log('📝 Hash de transacción:', result.hash)
+        console.log("Compra exitosa!")
+        console.log("Hash de transaccion:", result.hash)
         setTxHash(result.hash || null)
         setIsSuccess(true)
-        
-        // Guardar compra en localStorage
-        const purchases = JSON.parse(localStorage.getItem('purchases') || '[]')
+
+        const purchases = JSON.parse(localStorage.getItem("purchases") || "[]")
         purchases.push({
           contentId: content.id,
           purchaseDate: new Date().toISOString(),
-          transactionHash: result.hash
+          transactionHash: result.hash,
         })
-        localStorage.setItem('purchases', JSON.stringify(purchases))
+        localStorage.setItem("purchases", JSON.stringify(purchases))
 
         setTimeout(() => {
           onSuccess()
         }, 2000)
       } else {
-        throw new Error(result.error || 'Purchase failed')
+        throw new Error(result.error || "Purchase failed")
       }
     } catch (err: any) {
-      console.error('❌ Error en compra:', err)
+      console.error("Error en compra:", err)
       setError(err.message || "Purchase failed")
     } finally {
       setIsProcessing(false)
     }
   }
-
   return (
       <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm">
         <div className="relative w-full max-w-md rounded-lg bg-card p-6 shadow-lg">

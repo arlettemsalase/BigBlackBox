@@ -7,6 +7,7 @@ import { ContentCard } from "@/components/content-card"
 import { Button } from "@/components/ui/button"
 import { mockContents } from "@/lib/mock-data"
 import type { Purchase } from "@/lib/types"
+import { ValuePropStrip } from "@/components/value-prop-strip"
 
 export default function LibraryPage() {
   const [purchases, setPurchases] = useState<Purchase[]>([])
@@ -29,9 +30,16 @@ export default function LibraryPage() {
     <div className="min-h-screen">
       <Header />
       <main className="mx-auto max-w-[1200px] px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold md:text-4xl">My Library</h1>
+        <div className="mb-6 space-y-3">
+          <p className="text-xs uppercase tracking-[0.24em] text-secondary">Propiedad clara</p>
+          <h1 className="text-3xl font-bold md:text-4xl">Tu biblioteca privada, respaldada en Stellar</h1>
+          <p className="text-muted-foreground">
+            Cada descarga está ligada a una compra verificable. Mantuvimos la misma narrativa en todos los endpoints para que
+            puedas demostrar valor y propiedad en segundos.
+          </p>
         </div>
+
+        <ValuePropStrip variant="compact" />
 
         {filteredContents.length > 0 ? (
           <div className="columns-2 gap-2 md:columns-4 md:gap-3">

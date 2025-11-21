@@ -6,6 +6,7 @@ import { Box, Loader2, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useWallet } from "@/lib/wallet-context"
 import { Alert, AlertDescription } from "@/components/ui/alert"
+import { ValuePropStrip } from "@/components/value-prop-strip"
 
 export default function ConnectPage() {
   const navigate = useNavigate()
@@ -29,15 +30,18 @@ export default function ConnectPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8 text-center">
+      <div className="w-full max-w-2xl space-y-8 text-center">
         <div className="flex justify-center">
           <Box className="h-16 w-16 text-primary" />
         </div>
 
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Pay creators privately with Stellar</h1>
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
+            Paga a creadores de forma privada con Stellar
+          </h1>
           <p className="text-lg text-muted-foreground">
-            Discover and purchase exclusive digital content from your favorite creators using the Stellar network.
+            Conecta tu wallet, compra contenido en segundos y demuestra propiedad sin exponer tu identidad. El mensaje y la
+            experiencia son los mismos que viste en el home: claros, auditables y listos para jurados exigentes.
           </p>
         </div>
 
@@ -81,6 +85,8 @@ export default function ConnectPage() {
             </a>
           </p>
         </div>
+
+        <ValuePropStrip variant="compact" />
       </div>
     </div>
   )

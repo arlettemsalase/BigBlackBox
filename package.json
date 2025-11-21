@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "metrics": "node scripts/metrics.js"
   },
   "dependencies": {
     "@stellar/freighter-api": "^6.0.0",

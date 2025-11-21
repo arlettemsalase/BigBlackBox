@@ -47,6 +47,7 @@ impl PurchaseDistributor {
         platform_address: Address,
         platform_fee_bps: u32,
     ) {
+        admin.require_auth();
         // Verificar que no esté inicializado
         if env.storage().instance().has(&DataKey::Admin) {
             panic!("Already initialized");
@@ -128,9 +129,9 @@ impl PurchaseDistributor {
         env.storage().instance().set(&DataKey::PurchaseCount, &count);
 
         // Emitir eventos
-        env.events().publish(("purchase", content_id), amount);
-        env.events().publish(("platform_fee", ), platform_fee);
-        env.events().publish(("creator_amount", ), creator_amount);
+        env.events().publish(("purchase", content_id.clone(), buyer.clone()), amount);
+        env.events().publish(("platform_fee", content_id.clone()), platform_fee);
+        env.events().publish(("creator_amount", content_id), creator_amount);
 
         purchase
     }
@@ -179,8 +180,8 @@ impl PurchaseDistributor {
 
         config.platform_fee_bps = new_fee_bps;
         env.storage().instance().set(&DataKey::Config, &config);
-        
-        env.events().publish(("fee_updated", ), new_fee_bps);
+
+        env.events().publish(("fee_updated", admin), new_fee_bps);
     }
 
     /// Actualiza dirección de plataforma (solo admin)
@@ -205,8 +206,8 @@ impl PurchaseDistributor {
 
         config.platform_address = new_address.clone();
         env.storage().instance().set(&DataKey::Config, &config);
-        
-        env.events().publish(("platform_updated", ), &new_address);
+
+        env.events().publish(("platform_updated", admin), &new_address);
     }
 
     /// Obtiene la configuración actual
