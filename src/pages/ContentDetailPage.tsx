@@ -122,10 +122,6 @@ export default function ContentDetailPage() {
         <PurchaseModal
           content={content}
           onClose={() => setShowPurchaseModal(false)}
-          onSuccess={() => {
-            setShowPurchaseModal(false)
-            window.location.reload()
-          }}
         />
       )}
     </div>
