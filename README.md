@@ -342,3 +342,6 @@ npm run test             # Ejecutar tests
 ## Licencia
 
 MIT License - Ver LICENSE para más detalles
+
+## LINK DE NOTION
+https://www.notion.so/BBB-Day-2-Thursday-20-11-Technical-Foundation-2b179884aad180a09406f0462913fc1e
