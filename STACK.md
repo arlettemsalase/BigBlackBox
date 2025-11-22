@@ -1,4 +1,4 @@
-# Black Big Box - Tech Stack
+# Big Black Box - Tech Stack
 
 ## Frontend Stack
 - **Framework**: React 18.3
