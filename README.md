@@ -2,7 +2,7 @@
 
 ## 1. Descripción General
 
-**BIGBLACKBOX** es un marketplace de contenido personalizado donde usuarios pueden comprar y vender de manera privada sin exponer datos sensibles. La plataforma utiliza **Zero-Knowledge Proofs** para verificar que el usuario es mayor de edad sin revelar su edad real, **Stellar Network** para pagos rápidos y baratos en USDC/XLM, y **Freighter Wallet** para gestión de identidad descentralizada.
+**BIGBLACKBOX** es un marketplace de contenido ilustrado personalizado donde usuarios pueden comprar y vender de manera privada sin exponer datos sensibles. La plataforma utiliza **Zero-Knowledge Proofs** para verificar que el usuario es mayor de edad sin revelar su edad real, **Stellar Network** para pagos rápidos y baratos en USDC/XLM, y **Freighter Wallet** para gestión de identidad descentralizada.
 
 ### Problema
 
@@ -10,7 +10,7 @@ Las plataformas actuales obligan a los usuarios a entregar información personal
 
 ### Solución
 
-BIGBLACKBOX permite navegar contenido, solicitar trabajos personalizados, verificar edad con ZK (próximamente) y pagar en XLM/USDC sin revelar datos sensibles. Todo el contenido adquirido queda registrado en la blockchain de Stellar.
+BIGBLACKBOX permite navegar contenido, solicitar trabajos personalizados, verificar edad con ZK (próximamente) y pagar en XLM/USDC (pronto SoroSwap para pago con más monedas) sin revelar datos sensibles. Todo el contenido adquirido queda registrado en la blockchain de Stellar.
 
 ---
 
@@ -185,6 +185,7 @@ BigBlackBox/
 - **Pagos USDC** - Integración de stablecoin
 - **Zero-Knowledge Proofs** - Verificación de edad sin revelar datos
 - **Soroban Smart Contracts** - Contratos para ownership
+- **SoroSwap** - Swap para poder pagar con otras monedas y el ilustrador reciba XLM/USDC.
 
 ### 📋 Planificado
 - **Backend Node.js + Express** - API REST
@@ -281,17 +282,17 @@ Library → Contenido comprado → Viewer → Rating (próximamente)
 
 ## 10. Equipo BBB
 
-- **Andrea Junes** – Backend & Zero-Knowledge
+- **Andrea Junes** – Back-End
 - **Arlette Salal** – Product Manager
-- **Eduardo Ruiz** – Backend / Infraestructura
-- **Natalia Salvatierra** – Frontend
-- **María Eugenia Funes** – UX/UI Marketplace
+- **Eduardo Ruiz** – Front-End
+- **Natalia Salvatierra** – Smart Contracts
+- **María Eugenia Funes** – Compliance & Economy
 
 ---
 
 ## 11. Estado del Proyecto (Hackathon)
 
-### ✅ Logros (Primeras 48 horas)
+### ✅ Logros (Primeras 76 horas)
 - Frontend React completo y funcional
 - Integración Freighter Wallet operativa
 - Sistema de pagos XLM en Testnet funcionando
@@ -300,15 +301,18 @@ Library → Contenido comprado → Viewer → Rating (próximamente)
 - UI/UX implementada con Tailwind CSS
 - Mock backend para desarrollo ágil
 - Flujo end-to-end demostrable
+- Despliegue de Soroban Smart Contracts
+- Demo final grabada
+
+
 
 ### 🎯 Próximos Pasos
 - Integración USDC para pagos en stablecoin
 - Implementación Zero-Knowledge Proofs (Noir)
-- Despliegue de Soroban Smart Contracts
+- Implementación de SoroSwap para el pago multimonedas
 - Backend Express + Postgres
 - Sistema de reviews y ratings
 - Viewers de contenido multimedia
-- Demo final grabada
 
 ---
 
