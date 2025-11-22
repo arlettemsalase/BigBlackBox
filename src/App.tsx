@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom"
 import { WalletProvider, useWallet } from "@/lib/wallet-context"
 import { Toaster } from "@/components/ui/sonner"
 import { FreighterModal } from "@/components/freighter-modal"
-import { KYCModal } from "@/components/kyc-modal"
+import { AgeVerificationModal } from "@/components/age-verification-modal"
 import ConnectPage from "@/pages/ConnectPage"
 import DiscoverPage from "@/pages/DiscoverPage"
 import ContentDetailPage from "@/pages/ContentDetailPage"
@@ -18,9 +18,9 @@ function AppContent() {
     setShowFreighterModal, 
     freighterMode, 
     handleFreighterConnect,
-    showKYCModal,
-    setShowKYCModal,
-    handleKYCComplete
+    showAgeVerificationModal,
+    setShowAgeVerificationModal,
+    handleAgeVerificationComplete
   } = useWallet()
 
   return (
@@ -44,11 +44,11 @@ function AppContent() {
           onConnect={handleFreighterConnect}
         />
       )}
-      {showKYCModal && (
-        <KYCModal
-          onComplete={handleKYCComplete}
+      {showAgeVerificationModal && (
+        <AgeVerificationModal
+          onComplete={handleAgeVerificationComplete}
           onCancel={() => {
-            setShowKYCModal(false)
+            setShowAgeVerificationModal(false)
             setShowFreighterModal(false)
           }}
         />

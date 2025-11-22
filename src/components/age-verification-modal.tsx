@@ -3,17 +3,17 @@
 import { useState, useRef, useEffect } from "react"
 import { Camera, CheckCircle2, XCircle, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { KYC_CONFIG, isAgeVerified } from "@/lib/kyc-config"
+import { AGE_VERIFICATION_CONFIG, isAgeVerified } from "@/lib/age-verification-config"
 
-interface KYCModalProps {
+interface AgeVerificationModalProps {
   onComplete: (success: boolean, age: number) => void
   onCancel: () => void
 }
 
-type KYCStep = "intro" | "front-capture" | "front-preview" | "back-capture" | "back-preview" | "processing" | "result"
+type VerificationStep = "intro" | "front-capture" | "front-preview" | "back-capture" | "back-preview" | "processing" | "result"
 
-export function KYCModal({ onComplete, onCancel }: KYCModalProps) {
-  const [step, setStep] = useState<KYCStep>("intro")
+export function AgeVerificationModal({ onComplete, onCancel }: AgeVerificationModalProps) {
+  const [step, setStep] = useState<VerificationStep>("intro")
   const [stream, setStream] = useState<MediaStream | null>(null)
   const [frontImage, setFrontImage] = useState<string | null>(null)
   const [backImage, setBackImage] = useState<string | null>(null)
@@ -113,7 +113,7 @@ export function KYCModal({ onComplete, onCancel }: KYCModalProps) {
     
     // Simulate ID verification processing
     setTimeout(() => {
-      const mockAge = KYC_CONFIG.MOCK_AGE
+      const mockAge = AGE_VERIFICATION_CONFIG.MOCK_AGE
       const success = isAgeVerified(mockAge)
       setVerificationResult({ success, age: mockAge })
       setStep("result")
@@ -271,7 +271,7 @@ export function KYCModal({ onComplete, onCancel }: KYCModalProps) {
                   <div className="text-center">
                     <h3 className="text-xl font-semibold mb-2">Verification Successful!</h3>
                     <p className="text-sm text-muted-foreground">
-                      Age verified: {verificationResult.age} years old
+                      Age verified: {verificationResult.age} years old. You are of legal age.
                     </p>
                     <p className="text-sm text-muted-foreground mt-1">
                       You can now access the platform
@@ -286,7 +286,7 @@ export function KYCModal({ onComplete, onCancel }: KYCModalProps) {
                   <div className="text-center">
                     <h3 className="text-xl font-semibold mb-2">Verification Failed</h3>
                     <p className="text-sm text-muted-foreground">
-                      Age verified: {verificationResult.age} years old
+                      Age verified: {verificationResult.age} years old. You are not of legal age.
                     </p>
                     <p className="text-sm text-destructive mt-1">
                       You must be 18 or older to use this platform

@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
-import { getKYCStatus, saveKYCStatus } from "@/lib/kyc-config"
+import { getAgeVerificationStatus, saveAgeVerificationStatus } from "@/lib/age-verification-config"
 
 interface WalletContextType {
   isConnected: boolean
@@ -15,10 +15,10 @@ interface WalletContextType {
   freighterMode: "connect" | "sign"
   setFreighterMode: (mode: "connect" | "sign") => void
   handleFreighterConnect: (address: string) => void
-  showKYCModal: boolean
-  setShowKYCModal: (show: boolean) => void
-  handleKYCComplete: (success: boolean, age: number) => void
-  isKYCVerified: boolean
+  showAgeVerificationModal: boolean
+  setShowAgeVerificationModal: (show: boolean) => void
+  handleAgeVerificationComplete: (success: boolean, age: number) => void
+  isAgeVerified: boolean
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined)
@@ -30,8 +30,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null)
   const [showFreighterModal, setShowFreighterModal] = useState(false)
   const [freighterMode, setFreighterMode] = useState<"connect" | "sign">("connect")
-  const [showKYCModal, setShowKYCModal] = useState(false)
-  const [isKYCVerified, setIsKYCVerified] = useState(false)
+  const [showAgeVerificationModal, setShowAgeVerificationModal] = useState(false)
+  const [isAgeVerified, setIsAgeVerified] = useState(false)
   const [pendingAddress, setPendingAddress] = useState<string | null>(null)
 
   useEffect(() => {
@@ -56,18 +56,18 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }
 
   const handleFreighterConnect = (newAddress: string) => {
-    // Check if KYC is required
-    const kycStatus = getKYCStatus(newAddress)
+    // Check if age verification is required
+    const verificationStatus = getAgeVerificationStatus(newAddress)
     
-    if (!kycStatus) {
-      // KYC required
+    if (!verificationStatus) {
+      // Age verification required
       setPendingAddress(newAddress)
       setShowFreighterModal(false)
-      setShowKYCModal(true)
+      setShowAgeVerificationModal(true)
     } else {
-      // KYC already done
+      // Age already verified
       completeConnection(newAddress)
-      setIsKYCVerified(true)
+      setIsAgeVerified(true)
     }
   }
 
@@ -85,22 +85,22 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const handleKYCComplete = (success: boolean, age: number) => {
-    setShowKYCModal(false)
+  const handleAgeVerificationComplete = (success: boolean, age: number) => {
+    setShowAgeVerificationModal(false)
     
     if (success && pendingAddress) {
-      saveKYCStatus(pendingAddress, age)
-      setIsKYCVerified(true)
+      saveAgeVerificationStatus(pendingAddress, age)
+      setIsAgeVerified(true)
       completeConnection(pendingAddress)
       setPendingAddress(null)
     } else {
-      // KYC failed
+      // Age verification failed
       setIsLoading(false)
       setError("Age verification failed. You must be 18 or older to use this platform.")
       setPendingAddress(null)
       
       if ((window as any).__walletConnectReject) {
-        ;(window as any).__walletConnectReject(new Error("KYC verification failed"))
+        ;(window as any).__walletConnectReject(new Error("Age verification failed"))
         delete (window as any).__walletConnectResolve
         delete (window as any).__walletConnectReject
       }
@@ -126,10 +126,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       freighterMode,
       setFreighterMode,
       handleFreighterConnect,
-      showKYCModal,
-      setShowKYCModal,
-      handleKYCComplete,
-      isKYCVerified
+      showAgeVerificationModal,
+      setShowAgeVerificationModal,
+      handleAgeVerificationComplete,
+      isAgeVerified
     }}>
       {children}
     </WalletContext.Provider>
