@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useNavigate } from "react-router-dom"
-import { ArrowLeft, ShoppingCart, Download } from "lucide-react"
+import { ArrowLeft, ShoppingCart, CheckCircle2 } from "lucide-react"
 import { Header } from "@/components/header"
 import { Button } from "@/components/ui/button"
 import { getContentById } from "@/lib/mock-backend"
@@ -15,6 +15,7 @@ export default function ContentDetailPage() {
   const [content, setContent] = useState<Content | null>(null)
   const [loading, setLoading] = useState(true)
   const [showPurchaseModal, setShowPurchaseModal] = useState(false)
+  const [isPurchased, setIsPurchased] = useState(false)
 
   useEffect(() => {
     const loadContent = async () => {
@@ -23,6 +24,11 @@ export default function ContentDetailPage() {
       try {
         const data = await getContentById(id)
         setContent(data)
+        
+        // Verificar si ya fue comprado
+        const purchases = JSON.parse(localStorage.getItem('purchases') || '[]')
+        const purchased = purchases.some((p: any) => p.contentId === id)
+        setIsPurchased(purchased || (data?.isOwned ?? false))
       } catch (error) {
         console.error("Error loading content:", error)
       } finally {
@@ -32,6 +38,16 @@ export default function ContentDetailPage() {
 
     loadContent()
   }, [id])
+  
+  const handleModalClose = () => {
+    setShowPurchaseModal(false)
+    // Verificar nuevamente si se compró
+    if (id) {
+      const purchases = JSON.parse(localStorage.getItem('purchases') || '[]')
+      const purchased = purchases.some((p: any) => p.contentId === id)
+      setIsPurchased(purchased)
+    }
+  }
 
   if (loading) {
     return (
@@ -99,10 +115,10 @@ export default function ContentDetailPage() {
               </div>
             </div>
 
-            {content.isOwned ? (
-              <Button className="w-full" size="lg">
-                <Download className="mr-2 h-5 w-5" />
-                Download Image
+            {isPurchased ? (
+              <Button className="w-full" size="lg" disabled variant="secondary">
+                <CheckCircle2 className="mr-2 h-5 w-5" />
+                Already Purchased
               </Button>
             ) : (
               <Button
@@ -121,7 +137,7 @@ export default function ContentDetailPage() {
       {showPurchaseModal && content && (
         <PurchaseModal
           content={content}
-          onClose={() => setShowPurchaseModal(false)}
+          onClose={handleModalClose}
         />
       )}
     </div>
