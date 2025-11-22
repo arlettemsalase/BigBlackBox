@@ -8,6 +8,9 @@ import DiscoverPage from "@/pages/DiscoverPage"
 import ContentDetailPage from "@/pages/ContentDetailPage"
 import LibraryPage from "@/pages/LibraryPage"
 import LibraryContentPage from "@/pages/LibraryContentPage"
+import ArtistsPage from "@/pages/ArtistsPage"
+import ArtistProfilePage from "@/pages/ArtistProfilePage"
+import ChatPage from "@/pages/ChatPage"
 
 function AppContent() {
   const { 
@@ -29,6 +32,9 @@ function AppContent() {
         <Route path="/content/:id" element={<ContentDetailPage />} />
         <Route path="/library" element={<LibraryPage />} />
         <Route path="/library/:id" element={<LibraryContentPage />} />
+        <Route path="/artists" element={<ArtistsPage />} />
+        <Route path="/artists/:username" element={<ArtistProfilePage />} />
+        <Route path="/chat/:username" element={<ChatPage />} />
       </Routes>
       <Toaster />
       {showFreighterModal && (

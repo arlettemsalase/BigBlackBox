@@ -25,6 +25,12 @@ export function Header() {
             Discover
           </Link>
           <Link
+            to="/artists"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Artists
+          </Link>
+          <Link
             to="/library"
             className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
           >

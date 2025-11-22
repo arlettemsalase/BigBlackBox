@@ -4,7 +4,7 @@ export const mockContents: Content[] = [
   {
     id: "1",
     title: "Sakura Dreams",
-    creator: "Yuki Tanaka",
+    creator: "@yukitanaka",
     price: 15,
     description: "Beautiful anime artwork featuring cherry blossoms and serene atmosphere.",
     thumbnail: "/anime1_marked.png",
@@ -14,7 +14,7 @@ export const mockContents: Content[] = [
   {
     id: "2",
     title: "Neon Nights",
-    creator: "Hiro Nakamura",
+    creator: "@hironaka",
     price: 10,
     description: "Cyberpunk-inspired anime illustration with vibrant neon colors.",
     thumbnail: "/anime2_blur.png",
@@ -24,7 +24,7 @@ export const mockContents: Content[] = [
   {
     id: "3",
     title: "Ocean Melody",
-    creator: "Aiko Suzuki",
+    creator: "@aikosuzuki",
     price: 25,
     description: "Enchanting underwater scene with mystical marine elements.",
     thumbnail: "/anime3_blur.png",
@@ -34,7 +34,7 @@ export const mockContents: Content[] = [
   {
     id: "4",
     title: "Starlight Warrior",
-    creator: "Kenji Yamamoto",
+    creator: "@kenjiyama",
     price: 12,
     description: "Epic fantasy character design with celestial themes.",
     thumbnail: "/anime4_marked.png",
@@ -44,7 +44,7 @@ export const mockContents: Content[] = [
   {
     id: "5",
     title: "Autumn Whispers",
-    creator: "Sakura Matsumoto",
+    creator: "@sakuramtmt",
     price: 18,
     description: "Warm autumn scene with falling leaves and nostalgic mood.",
     thumbnail: "/anime5_marked.png",
@@ -54,7 +54,7 @@ export const mockContents: Content[] = [
   {
     id: "6",
     title: "Moonlit Garden",
-    creator: "Ren Takahashi",
+    creator: "@rentaka",
     price: 14,
     description: "Peaceful night garden illuminated by soft moonlight.",
     thumbnail: "/anime6_marked.png",
@@ -64,7 +64,7 @@ export const mockContents: Content[] = [
   {
     id: "7",
     title: "Dragon's Dawn",
-    creator: "Kaito Kobayashi",
+    creator: "@kaitokoba",
     price: 30,
     description: "Majestic dragon artwork with sunrise background.",
     thumbnail: "/anime7_marked.png",
@@ -74,7 +74,7 @@ export const mockContents: Content[] = [
   {
     id: "8",
     title: "Winter Solstice",
-    creator: "Yumi Watanabe",
+    creator: "@yumiwata",
     price: 20,
     description: "Snowy landscape with magical winter atmosphere.",
     thumbnail: "/anime8_blur.png",
@@ -84,7 +84,7 @@ export const mockContents: Content[] = [
   {
     id: "9",
     title: "Phoenix Rising",
-    creator: "Daichi Sato",
+    creator: "@daichisato",
     price: 35,
     description: "Powerful phoenix illustration with flames and rebirth symbolism.",
     thumbnail: "/anime9_marked.png",
@@ -94,7 +94,7 @@ export const mockContents: Content[] = [
   {
     id: "10",
     title: "Celestial Dance",
-    creator: "Mei Fujiwara",
+    creator: "@meifuji",
     price: 22,
     description: "Ethereal character dancing among stars and cosmic elements.",
     thumbnail: "/anime10_blur.png",
@@ -104,7 +104,7 @@ export const mockContents: Content[] = [
   {
     id: "11",
     title: "Mystic Forest",
-    creator: "Takeshi Ishida",
+    creator: "@takeshiishi",
     price: 16,
     description: "Enchanted forest scene with magical creatures and glowing flora.",
     thumbnail: "/anime11_blur.png",
@@ -114,11 +114,51 @@ export const mockContents: Content[] = [
   {
     id: "12",
     title: "Crimson Sunset",
-    creator: "Haruka Kimura",
+    creator: "@harukakimura",
     price: 28,
     description: "Dramatic sunset landscape with silhouetted character and warm tones.",
     thumbnail: "/anime12_blur.png",
     width: 1024,
     height: 1550,
+  },
+  {
+    id: "13",
+    title: "Ethereal Dreams",
+    creator: "@laia_yuren",
+    price: 19,
+    description: "Dreamlike composition with floating elements and soft pastel colors.",
+    thumbnail: "/anime13_blur.png",
+    width: 1024,
+    height: 1400,
+  },
+  {
+    id: "14",
+    title: "Cosmic Voyage",
+    creator: "@laia_yuren",
+    price: 22,
+    description: "Interstellar journey through vibrant nebulas and distant galaxies.",
+    thumbnail: "/anime14_marked.jpg",
+    width: 1024,
+    height: 1450,
+  },
+  {
+    id: "15",
+    title: "Shadow Guardian",
+    creator: "@laia_yuren",
+    price: 26,
+    description: "Mysterious guardian character with dramatic lighting and powerful presence.",
+    thumbnail: "/anime15_marked.png",
+    width: 1024,
+    height: 1650,
+  },
+  {
+    id: "16",
+    title: "Twilight Harmony",
+    creator: "@laia_yuren",
+    price: 24,
+    description: "Serene twilight scene blending day and night with harmonious colors.",
+    thumbnail: "/anime16_marked.png",
+    width: 1024,
+    height: 1500,
   }
 ]
