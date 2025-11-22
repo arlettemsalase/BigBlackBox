@@ -1,7 +1,7 @@
 "use client"
 
 import { Link } from "react-router-dom"
-import { Box, Bell, User } from "lucide-react"
+import { Bell, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { useWallet } from "@/lib/wallet-context"
@@ -13,7 +13,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link to="/discover" className="flex items-center gap-2">
-          <Box className="h-6 w-6 text-primary" />
+          <img src="/logo/logo_color.png" alt="Big Black Box" className="h-8 w-8" />
           <span className="text-lg font-bold">Big Black Box</span>
         </Link>
 
